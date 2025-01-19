@@ -4,8 +4,8 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 
 export const metadata: Metadata = {
   title:
-    "Renderizaí Plataforma de Renderizações de Alto Padrão",
-  description: "A Renderiza aí garante renders de qualidade e ultra realistas para seus projetos de Arquitetura e Design de Interiores",
+    "Next.js E-commerce Dashboard | TailAdmin - Next.js Dashboard Template",
+  description: "This is Next.js Home for TailAdmin Dashboard Template",
 };
 
 export default function Home() {
