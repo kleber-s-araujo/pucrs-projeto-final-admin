@@ -1,1 +1,1 @@
-# pucrs-projeto-final-front2
+# pucrs-projeto-final-admin
