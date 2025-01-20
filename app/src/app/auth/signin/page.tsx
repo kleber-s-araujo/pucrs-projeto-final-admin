@@ -1,35 +1,48 @@
 "use client"
-import React, { useState } from "react";
-import { Metadata } from "next";
+import React, { SyntheticEvent, useState } from "react";
 import OutLayout from "@/components/Layouts/OutLayout";
 import Link from "next/link";
 import loginService from "@/services/login";
-
-/*
-export const metadata: Metadata = {
-  title: "Renderizaí | Imagens de Alto Padrão para seu projeto",
-  description: "Plataforma de Renderizações Ultra Realistas",
-};
-*/
+import { Input } from "postcss";
 
 const SignIn: React.FC = () => {
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
+
     event.preventDefault();
-    //console.log("enviou!");
-    
+    //console.log(event.nativeEvent.submitter?.id);
+
     try {
-      
-      var data;
 
-      loginService.getTest().then((response: any) => {
-        alert(response.data.nome);
-      })
+      if (event.nativeEvent.submitter?.id === "btnForm") {
+        //alert("Login com Email/Senha");
+        let email = 'teste@email.com';
+        let senha = 'senha@123';
+        loginService.doLoginRenderizador(email, senha).then((response) =>
+          console.log(response)
+        );
 
-      
+        /*
+        const response = await fetch('http://localhost:3030/api/renderizador/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include', // Important for cookies/sessions
+          body: JSON.stringify({ email, senha }),
+        });
+
+        console.log(response);
+        */
+      }
+      else if (event.nativeEvent.submitter?.id === "btnGoogle") {
+        alert("Login com Google");
+      }
+
+      //loginService.getTest().then((response: any) => {  })
 
     } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
+      console.error('Erro ao Efetuar Login', error);
     }
   };
 
@@ -115,13 +128,16 @@ const SignIn: React.FC = () => {
 
             <div className="mb-5">
               <input
+                id="btnForm"
                 type="submit"
                 value="Entrar com Email e Senha"
                 className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
               />
             </div>
 
-            <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
+            <button
+              id="btnGoogle"
+              className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
               <span>
                 <svg
                   width="20"
