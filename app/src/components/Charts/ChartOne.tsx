@@ -90,18 +90,18 @@ const options: ApexOptions = {
   xaxis: {
     type: "category",
     categories: [
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
       "Jan",
-      "Feb",
+      "Fev",
       "Mar",
-      "Apr",
-      "May",
+      "Abr",
+      "Mai",
       "Jun",
       "Jul",
-      "Aug",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dez",
     ],
     axisBorder: {
       show: false,
@@ -150,8 +150,8 @@ const ChartOne: React.FC = () => {
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-primary"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-primary">Total Revenue</p>
-              <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>
+              <p className="font-semibold text-primary">Receita Total</p>
+              <p className="text-sm font-medium">No Período...</p>
             </div>
           </div>
           <div className="flex min-w-47.5">
@@ -159,13 +159,16 @@ const ChartOne: React.FC = () => {
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-secondary"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-secondary">Total Sales</p>
-              <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>
+              <p className="font-semibold text-secondary">Total de Projetos</p>
+              <p className="text-sm font-medium">No Período...</p>
             </div>
           </div>
         </div>
+
+        { /*
         <div className="flex w-full max-w-45 justify-end">
           <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">
+            
             <button className="rounded bg-white px-3 py-1 text-xs font-medium text-black shadow-card hover:bg-white hover:shadow-card dark:bg-boxdark dark:text-white dark:hover:bg-boxdark">
               Day
             </button>
@@ -177,6 +180,8 @@ const ChartOne: React.FC = () => {
             </button>
           </div>
         </div>
+        */ }
+
       </div>
 
       <div>

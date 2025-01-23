@@ -10,9 +10,9 @@ export default function OutLayout({
   return (
     <>
       {/* <!-- ===== Page Wrapper Start ===== --> */}
-      <div className="login-out bg-white" >
-
-        <Header />
+      <Header />
+      
+      <div className="login-out bg-white" >       
 
         {/* <!-- ===== Main Content Start ===== --> */}
         <main className="w-1/3 h-full">

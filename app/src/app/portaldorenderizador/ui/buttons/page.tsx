@@ -258,7 +258,7 @@ const Buttons = () => {
                   />
                 </svg>
               </span>
-              Button With Icon
+              Button With Icon Z
             </Link>
 
             <Link
@@ -318,7 +318,7 @@ const Buttons = () => {
                   />
                 </svg>
               </span>
-              Button With Icon
+              Button With Icon X
             </Link>
 
             <Link

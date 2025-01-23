@@ -3,10 +3,12 @@ import React, { SyntheticEvent, useState } from "react";
 import OutLayout from "@/components/Layouts/OutLayout";
 import Link from "next/link";
 import loginService from "@/services/login";
-import { Input } from "postcss";
+import { useRouter } from "next/navigation";
 
 const SignIn: React.FC = () => {
 
+  const router = useRouter();
+  
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
 
     event.preventDefault();
@@ -15,12 +17,29 @@ const SignIn: React.FC = () => {
     try {
 
       if (event.nativeEvent.submitter?.id === "btnForm") {
+        
+        console.log(event.target.email.value);
+        console.log(event.target.senha.value);
+        
+
         //alert("Login com Email/Senha");
-        let email = 'teste@email.com';
-        let senha = 'senha@123';
-        loginService.doLoginRenderizador(email, senha).then((response) =>
-          console.log(response)
-        );
+        let email = 'jose@example.com';
+        let senha = 'password@#123!';
+        loginService.doLoginRenderizador(email, senha).then((response) => {
+
+          if (response.status === 200) {
+            console.log(response.data);
+
+            localStorage.setItem("auth-token", response.data.session);
+            localStorage.setItem("renderizador", JSON.stringify(response.data.renderizador));
+
+
+            
+            router.push('/');
+
+          }
+
+        });
 
         /*
         const response = await fetch('http://localhost:3030/api/renderizador/login', {
@@ -66,6 +85,7 @@ const SignIn: React.FC = () => {
                 <input
                   type="email"
                   id="email"
+                  required
                   placeholder="Entre seu email"
                   className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
@@ -98,6 +118,7 @@ const SignIn: React.FC = () => {
                 <input
                   type="Senha"
                   id="senha"
+                  required
                   placeholder="Pelo menos 6 caracteres com uma maiúscula"
                   className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
@@ -177,7 +198,7 @@ const SignIn: React.FC = () => {
             <div className="mt-6 text-center">
               <p>
                 Ainda não se cadastrou?{" "}
-                <Link href="/auth/signup" className="text-primary">
+                <Link href="/auth/cadastro" className="text-primary">
                   Cadastre-se aqui
                 </Link>
               </p>

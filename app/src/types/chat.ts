@@ -5,4 +5,5 @@ export type Chat = {
   time: number;
   textCount: number;
   dot: number;
+  last: string;
 };

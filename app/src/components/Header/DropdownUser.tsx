@@ -2,10 +2,13 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import ClickOutside from "@/components/ClickOutside";
+import { renderizador } from "@/types/renderizador";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const currentUser : renderizador = JSON.parse(localStorage.getItem("renderizador") || "");
+  
+  
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
       <Link
@@ -15,9 +18,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {currentUser.nome}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs">{currentUser.descricao}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
@@ -29,7 +32,7 @@ const DropdownUser = () => {
               width: "auto",
               height: "auto",
             }}
-            alt="User"
+            alt="Renderizador"
           />
         </span>
 
@@ -58,7 +61,7 @@ const DropdownUser = () => {
           <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
             <li>
               <Link
-                href="/profile"
+                href="/perfil"
                 className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
               >
                 <svg
@@ -78,9 +81,10 @@ const DropdownUser = () => {
                     fill=""
                   />
                 </svg>
-                My Profile
+                Meu Perfil
               </Link>
             </li>
+            { /*
             <li>
               <Link
                 href="#"
@@ -102,6 +106,7 @@ const DropdownUser = () => {
                 My Contacts
               </Link>
             </li>
+            */ }
             <li>
               <Link
                 href="/settings"
@@ -124,7 +129,7 @@ const DropdownUser = () => {
                     fill=""
                   />
                 </svg>
-                Account Settings
+                Suporte 
               </Link>
             </li>
           </ul>

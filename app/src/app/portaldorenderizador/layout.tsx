@@ -6,7 +6,7 @@ import "@/css/style.css";
 import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
 import { usePathname, useRouter } from "next/navigation";
-import { metadata } from './metadata';
+import { metadata } from '../metadata';
 
 export default function RootLayout({
   children,
@@ -25,19 +25,19 @@ export default function RootLayout({
     setTimeout(() => setLoading(false), 1000);
 
     // Lista de rotas públicas
-    const publicPaths = ['/portaldorenderizador/auth/sigin', '/portaldorenderizador/auth/sigup'];
+    const publicPaths = ['/portaldorenderizador/auth/login', '/portaldorenderizador/auth/cadastro'];
     const isPublicPath = publicPaths.some(path => pathname.startsWith(path));
 
     // Verifica se existe um token no localStorage ou cookie
     const token = localStorage.getItem('auth-token') || document.cookie.includes('auth-token');
     
-    //if (!token && !isPublicPath) {
-    //  router.push('./auth/signin');
-    //}
+    if (!token && !isPublicPath) {
+      router.push('/portaldorenderizador/auth/signin');
+    }
     
-    //if (token && isPublicPath) {
+    if (token && isPublicPath) {
       router.push('/portaldorenderizador');
-    //}
+    }
 
   }, []);
 

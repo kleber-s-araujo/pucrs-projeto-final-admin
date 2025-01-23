@@ -63,6 +63,10 @@
     @apply dark:!stroke-transparent;
 }
 
+.apexcharts-series.apexcharts-pie-series g path {
+    @apply dark:!stroke-transparent;
+}
+
 .apexcharts-legend-series {
     @apply !inline-flex gap-1.5;
 }

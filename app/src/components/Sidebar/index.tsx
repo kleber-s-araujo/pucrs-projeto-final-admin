@@ -46,8 +46,8 @@ const menuGroups = [
           </svg>
         ),
         label: "Dashboard",
-        route: "#",
-        children: [{ label: "eCommerce", route: "/" }],
+        route: "/portaldorenderizador",
+        //children: [{ label: "eCommerce", route: "/" }],
       },
       {
         icon: (
@@ -65,9 +65,10 @@ const menuGroups = [
             />
           </svg>
         ),
-        label: "Calendar",
-        route: "/calendar",
+        label: "Calendário",
+        route: "/portaldorenderizador/calendario-atividades",
       },
+      /*
       {
         icon: (
           <svg
@@ -91,6 +92,7 @@ const menuGroups = [
         label: "Profile",
         route: "/profile",
       },
+      
       {
         icon: (
           <svg
@@ -130,6 +132,7 @@ const menuGroups = [
           { label: "Form Layout", route: "/forms/form-layout" },
         ],
       },
+      */
       {
         icon: (
           <svg
@@ -158,8 +161,12 @@ const menuGroups = [
             </defs>
           </svg>
         ),
-        label: "Tables",
-        route: "/tables",
+        label: "Atividades",
+        route: "#",
+        children: [
+          { label: "Minhas Atividades", route: "/portaldorenderizador/atividades/minhas-atividades" },
+          { label: "Requisições de Render", route: "/portaldorenderizador/atividades/em-aberto" },
+        ],
       },
       {
         icon: (
@@ -194,7 +201,7 @@ const menuGroups = [
           </svg>
         ),
         label: "Settings",
-        route: "/settings",
+        route: "/portaldorenderizador/perfil/edit",
       },
     ],
   },
@@ -234,7 +241,7 @@ const menuGroups = [
           </svg>
         ),
         label: "Chart",
-        route: "/chart",
+        route: "/portaldorenderizador/chart",
       },
       {
         icon: (
@@ -275,8 +282,8 @@ const menuGroups = [
         label: "UI Elements",
         route: "#",
         children: [
-          { label: "Alerts", route: "/ui/alerts" },
-          { label: "Buttons", route: "/ui/buttons" },
+          { label: "Alerts", route: "/portaldorenderizador/ui/alerts" },
+          { label: "Buttons", route: "/portaldorenderizador/ui/buttons" },
         ],
       },
       {
@@ -314,8 +321,8 @@ const menuGroups = [
         label: "Authentication",
         route: "#",
         children: [
-          { label: "Sign In", route: "/auth/signin" },
-          { label: "Sign Up", route: "/auth/signup" },
+          { label: "Sign In", route: "/portaldorenderizador/auth/login" },
+          { label: "Sign Up", route: "/portaldorenderizador/auth/cadastro" },
         ],
       },
     ],
