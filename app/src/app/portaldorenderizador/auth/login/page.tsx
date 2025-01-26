@@ -16,15 +16,13 @@ const SignIn: React.FC = () => {
 
     try {
 
-      if (event.nativeEvent.submitter?.id === "btnForm") {
-        
-        console.log(event.target.email.value);
-        console.log(event.target.senha.value);
-        
+      if (event.nativeEvent.submitter?.id === "btnForm") {       
 
         //alert("Login com Email/Senha");
-        let email = 'jose@example.com';
-        let senha = 'password@#123!';
+        //let email = 'jose@example.com';
+        //let senha = 'password@#123!';
+        let email = event.target.email.value;
+        let senha = event.target.senha.value;
         loginService.doLoginRenderizador(email, senha).then((response) => {
 
           if (response.status === 200) {
@@ -32,10 +30,8 @@ const SignIn: React.FC = () => {
 
             localStorage.setItem("auth-token", response.data.session);
             localStorage.setItem("renderizador", JSON.stringify(response.data.renderizador));
-
-
-            
-            router.push('/');
+           
+            router.push('/portaldorenderizador');
 
           }
 

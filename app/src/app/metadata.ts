@@ -1,4 +1,4 @@
 export const metadata = {
-    title: 'Renderizaí | Renders de Alto Padrão ultra realistas',
-    description: 'Renderize suas imagens'
+    title: 'Renderizaí',
+    description: 'Renders de Alto Padrão Realistas para Arquitetura e Design de Interiores'
 }

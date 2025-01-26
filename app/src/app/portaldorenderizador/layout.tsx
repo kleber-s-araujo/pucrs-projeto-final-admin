@@ -23,7 +23,7 @@ export default function RootLayout({
   useEffect(() => {
 
     setTimeout(() => setLoading(false), 1000);
-
+    
     // Lista de rotas públicas
     const publicPaths = ['/portaldorenderizador/auth/login', '/portaldorenderizador/auth/cadastro'];
     const isPublicPath = publicPaths.some(path => pathname.startsWith(path));
@@ -32,7 +32,7 @@ export default function RootLayout({
     const token = localStorage.getItem('auth-token') || document.cookie.includes('auth-token');
     
     if (!token && !isPublicPath) {
-      router.push('/portaldorenderizador/auth/signin');
+      router.push('/portaldorenderizador/auth/login');
     }
     
     if (token && isPublicPath) {

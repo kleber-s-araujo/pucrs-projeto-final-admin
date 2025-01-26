@@ -252,3 +252,18 @@ input[type="search"]::-webkit-search-cancel-button {
 [x-cloak] {
     display: none !important;
 }
+
+
+.toast {
+    animation: toast .3s forwards;
+    @keyframes toast {
+        from {
+            opacity: 0;
+            transform: translateY(100px);
+        }
+        to{
+            opacity: 100;
+            transform: translateX(0);
+        }
+    }
+}
