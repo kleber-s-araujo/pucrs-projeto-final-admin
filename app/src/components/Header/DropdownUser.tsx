@@ -43,7 +43,7 @@ const DropdownUser = () => {
           <span className="block text-sm font-medium text-black dark:text-white">
             {currentUser.nome}
           </span>
-          <span className="block text-xs">{currentUser.descricao}</span>
+          <span className="block text-xs">{currentUser.titulo}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">

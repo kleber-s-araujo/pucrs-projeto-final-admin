@@ -7,8 +7,7 @@ import { useRouter } from "next/navigation";
 
 const SignIn: React.FC = () => {
 
-  const router = useRouter();
-  
+  const router = useRouter();  
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
 
     event.preventDefault();
