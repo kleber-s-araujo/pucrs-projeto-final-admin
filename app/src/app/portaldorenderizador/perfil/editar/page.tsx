@@ -4,46 +4,149 @@ import Image from "next/image";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Link from "next/link";
 import { renderizador } from "@/types/renderizador";
+import { capacidade } from "@/types/renderizador";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
+import renderService from "@/services/renderizador";
+import Loader from "@/components/common/Loader";
 
 const Settings = () => {
+
+  const [loading, setLoading] = useState<boolean>(true);
 
   const router = useRouter();
   const currentUser: renderizador = JSON.parse(localStorage.getItem("renderizador") || "");
 
+  //Outros Campos
+  const [bio, setBio] = useState("");
   const [pais, setPais] = useState("");
   const [cidade, setCidade] = useState("");
+  const [capacidade, setCapacidade] = useState(0);
+  const [tipos, setTipos] = useState<[capacidade]>([{
+    id: 1,
+    lang: "",
+    descricao: "",
+  }]);
+
+  const [changeUser, setChange] = useState({
+    id: 0,
+    nome: "",
+    email: "",
+    fotoPerfil: "",
+    titulo: "",
+    descricao: "",
+    dataRegistro: new Date(),
+    capacidade: 1,
+    localidade: "",
+    site: ""
+  });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChange({ ...changeUser, [e.target.name]: e.target.value });
+    console.log(changeUser);
+  };
+
+  const handleChangeSelect = (event: any) => {
+    const selected = tipos.find((tipo) => tipo.descricao === event.target.value);
+    //console.log(event.target.value, selected);
+    setCapacidade(selected.id);
+  };
+
+  const handleSubmitUpdate = (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
+    
+    event.preventDefault();
+    
+    let usr: renderizador = changeUser;
+    usr.id = currentUser.id;
+    usr.descricao = bio;
+    usr.localidade = pais + `/` + cidade;
+    usr.dataRegistro = currentUser.dataRegistro;
+    usr.capacidade = capacidade;
+
+    if(usr.nome == "")
+      usr.nome = currentUser.nome;
+    
+    if(usr.capacidade == 0 && currentUser.capacidade == null)
+      usr.capacidade = 1;
+
+
+    console.log(usr);
+
+    try {
+      
+      renderService.updateRenderizador(usr).then((response) =>
+      {
+
+        if(response.status == 200)
+        {
+          //console.log("User Atualizado");
+          localStorage.setItem("renderizador", JSON.stringify(usr));
+        }
+        else{
+          console.log("Erro ao atualizar");
+        }
+
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
 
   useEffect(() => {
 
-    fetch('https://ipapi.co/json/')
-      .then(response => response.json())
-      .then(data => {
-        setPais(data.country_name);
-        setCidade(data.city);
-      })
-      .catch(error => console.error('Erro ao buscar dados de localização:', error));
+    setTimeout(() => setLoading(false), 1500);
 
-  }, [cidade, pais]);
+    let isMounted = true;
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+
+        if (isMounted) {
+
+          const { latitude, longitude } = position.coords;
+          fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=pt`)
+            .then(response => response.json())
+            .then(data => {
+              console.log(`País: ${data.countryName}`);
+              console.log(`Cidade: ${data.city}`);
+              setPais(data.countryName);
+              setCidade(data.city);
+            })
+            .catch(error => console.error('Erro ao buscar dados de localização:', error));
+
+          renderService.getCapacidades().then((response) => {
+
+            if (response.status == 200) {
+              const capacidades = response.data.capacidades;
+              console.log(capacidades);
+              setTipos(capacidades);
+            }
+
+          });
+        }
+      });
+    } else {
+      console.error('Geolocalização não é suportada pelo seu navegador.');
+    }
+    return () => { isMounted = false };
+  }, []);
 
 
 
   return (
     <DefaultLayout>
+
+      {loading ? <Loader /> :
+
       <div className="mx-auto max-w-270">
+
         <Breadcrumb pageName="Editar Perfil" />
 
         <div className="grid grid-cols-5 gap-8">
           <div className="col-span-5 xl:col-span-3">
             <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-              <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
-                <h3 className="font-medium text-black dark:text-white">
-                  Informações Pessoais
-                </h3>
-              </div>
               <div className="p-7">
-                <form action="#">
+                <form onSubmit={handleSubmitUpdate}>
                   <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                     <div className="w-full ">
                       <label
@@ -81,8 +184,10 @@ const Settings = () => {
                         <input
                           className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                           type="text"
-                          name="fullName"
-                          id="fullName"
+                          name="nome"
+                          id="nome"
+                          required
+                          onChange={handleChange}
                           placeholder="José da Silva..."
                           defaultValue={currentUser.nome}
                         />
@@ -100,8 +205,10 @@ const Settings = () => {
                     <input
                       className="w-full rounded border border-stroke bg-gray px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       type="text"
-                      name="Username"
-                      id="Username"
+                      name="titulo"
+                      id="titulo"
+                      required
+                      onChange={handleChange}
                       placeholder="Renderizador Sênior..."
                       defaultValue={currentUser.descricao}
                     />
@@ -112,7 +219,32 @@ const Settings = () => {
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
                       htmlFor="Username"
                     >
-                      BIO
+                      Capacidade de Renderização *
+                    </label>
+
+                    <select className="w-full rounded border border-stroke bg-gray px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      id="capacidade"
+                      name="capacidade"
+                      required
+                      onChange={handleChangeSelect}
+                      defaultValue={currentUser.capacidade}>
+
+                      {tipos.map((tipo) => (
+                        <option key={tipo.id} value={tipo.descricao} >
+                          {tipo.descricao}
+                        </option>
+                      ))}
+
+                    </select>
+
+                  </div>
+
+                  <div className="mb-5.5">
+                    <label
+                      className="mb-3 block text-sm font-medium text-black dark:text-white"
+                      htmlFor="Username"
+                    >
+                      BIO *
                     </label>
                     <div className="relative">
                       <span className="absolute left-4.5 top-4">
@@ -151,6 +283,8 @@ const Settings = () => {
                         name="bio"
                         id="bio"
                         rows={6}
+                        required                        
+                        onChange={(e) => setBio(e.target.value)}
                         placeholder="Escreva sua BIO aqui...."
                         defaultValue={currentUser.descricao}
                       ></textarea>
@@ -158,58 +292,79 @@ const Settings = () => {
                   </div>
 
                   <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
-                  <div className="w-full sm:w-1/2">
-                    <label
-                      className="mb-3 block text-sm font-medium text-black dark:text-white"
-                      htmlFor="fullName"
-                    >
-                      País
-                    </label>
-                    <div className="relative">
-                      <span className="absolute left-4.5 top-4">
+                    <div className="w-full sm:w-1/2">
+                      <label
+                        className="mb-3 block text-sm font-medium text-black dark:text-white"
+                        htmlFor="fullName"
+                      >
+                        País *
+                      </label>
+                      <div className="relative">
+                        <span className="absolute left-4.5 top-4">
 
-                        <svg
-                          className="fill-current"
-                          width="20"
-                          height="20"
-                          viewBox="0 0 28 28"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <g opacity="0.8">
-                          <path fill="currentColor" d="M14 2.25A9.75 9.75 0 0 1 23.75 12c0 4.12-2.895 8.61-8.61 13.518a1.75 1.75 0 0 1-2.283-.002l-.378-.328C7.017 20.408 4.25 16.028 4.25 12A9.75 9.75 0 0 1 14 2.25Zm0 1.5A8.25 8.25 0 0 0 5.75 12c0 3.502 2.548 7.537 7.714 12.057l.373.323a.25.25 0 0 0 .326 0c5.416-4.652 8.087-8.795 8.087-12.38A8.25 8.25 0 0 0 14 3.75Zm0 4.5a3.75 3.75 0 1 1 0 7.5a3.75 3.75 0 0 1 0-7.5Zm0 1.5a2.25 2.25 0 1 0 0 4.5a2.25 2.25 0 0 0 0-4.5Z"/>
-                          </g>
-                        </svg>
-                      </span>
+                          <svg
+                            className="fill-current"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 28 28"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g opacity="0.8">
+                              <path fill="currentColor" d="M14 2.25A9.75 9.75 0 0 1 23.75 12c0 4.12-2.895 8.61-8.61 13.518a1.75 1.75 0 0 1-2.283-.002l-.378-.328C7.017 20.408 4.25 16.028 4.25 12A9.75 9.75 0 0 1 14 2.25Zm0 1.5A8.25 8.25 0 0 0 5.75 12c0 3.502 2.548 7.537 7.714 12.057l.373.323a.25.25 0 0 0 .326 0c5.416-4.652 8.087-8.795 8.087-12.38A8.25 8.25 0 0 0 14 3.75Zm0 4.5a3.75 3.75 0 1 1 0 7.5a3.75 3.75 0 0 1 0-7.5Zm0 1.5a2.25 2.25 0 1 0 0 4.5a2.25 2.25 0 0 0 0-4.5Z" />
+                            </g>
+                          </svg>
+                        </span>
+                        <input
+                          className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                          type="text"
+                          name="pais"
+                          id="pai"
+                          required
+                          onChange={(e) => setPais(e.target.value)}
+                          placeholder="Brasil"
+                          defaultValue={pais}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="w-full sm:w-1/2">
+                      <label
+                        className="mb-3 block text-sm font-medium text-black dark:text-white"
+                        htmlFor="phoneNumber"
+                      >
+                        Cidade *
+                      </label>
                       <input
-                        className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        className="w-full rounded border border-stroke bg-gray px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                         type="text"
-                        name="pais"
-                        id="pai"
-                        placeholder="Brasil"
-                        defaultValue={pais}
+                        name="cidade"
+                        id="cidade"
+                        required
+                        onChange={(e) => setCidade(e.target.value)}
+                        placeholder="São Paulo..."
+                        defaultValue={cidade}
                       />
                     </div>
                   </div>
 
-                  <div className="w-full sm:w-1/2">
+                  <div className="mb-5.5">
                     <label
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
-                      htmlFor="phoneNumber"
+                      htmlFor="Username"
                     >
-                      Telefone
+                      Site
                     </label>
                     <input
                       className="w-full rounded border border-stroke bg-gray px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       type="text"
-                      name="cidade"
-                      id="cidade"
-                      placeholder="São Paulo..."
-                      defaultValue={cidade}
+                      name="site"
+                      id="site"
+                      onChange={handleChange}
+                      placeholder="Adicione o seu site para ser exibido no seu Perfil"
+                      defaultValue=""
                     />
                   </div>
-                  </div>
-
 
                   <div className="flex justify-end gap-4.5">
                     <button
@@ -322,6 +477,9 @@ const Settings = () => {
           </div>
         </div>
       </div>
+
+    }
+
     </DefaultLayout>
   );
 };

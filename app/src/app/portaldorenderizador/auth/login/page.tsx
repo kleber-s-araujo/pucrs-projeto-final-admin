@@ -18,9 +18,6 @@ const SignIn: React.FC = () => {
 
       if (event.nativeEvent.submitter?.id === "btnForm") {       
 
-        //alert("Login com Email/Senha");
-        //let email = 'jose@example.com';
-        //let senha = 'password@#123!';
         let email = event.target.email.value;
         let senha = event.target.senha.value;
         loginService.doLoginRenderizador(email, senha).then((response) => {
