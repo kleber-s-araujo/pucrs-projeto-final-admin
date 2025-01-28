@@ -169,7 +169,7 @@ const menuGroups = [
           { label: "Form Layout", route: "/forms/form-layout" },
         ],
       },
-      */
+      
       
       {
         icon: (
@@ -206,6 +206,8 @@ const menuGroups = [
         label: "Settings",
         route: "/portaldorenderizador/perfil/editar",
       },
+      */
+     
       {
         icon: (
           <svg
