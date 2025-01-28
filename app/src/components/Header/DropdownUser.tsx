@@ -25,10 +25,10 @@ const DropdownUser = () => {
 
   const doLogout = () => {
 
+    //setIsModalVisible(false);
     localStorage.removeItem("renderizador");
-    localStorage.removeItem('auth-token');
+    localStorage.removeItem('auth-token');        
     router.push('/portaldorenderizador/auth/login');
-    setIsModalVisible(false);
 
   };
 
