@@ -10,6 +10,7 @@ import { SyntheticEvent, useEffect, useState } from "react";
 import renderService from "@/services/renderizador";
 import Loader from "@/components/common/Loader";
 import Mensagem from "@/components/Modal/Mensagem";
+import Loading from "@/components/Modal/Loading";
 
 const Settings = () => {
 
@@ -74,19 +75,35 @@ const Settings = () => {
   const [message, setMessage] = useState("");
   const [isError, setError] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalLoadingVisible, setIsModalLoadingVisible] = useState(false);
   const handleOpenModal = async () => {
     setIsModalVisible(true);
   }
   const handleCloseModal = () => {
     setIsModalVisible(false);
-    router.push("/portaldorenderizador")
+    router.push("/portaldorenderizador");
   };
+  const openLoadingModal = async () => {
+    setIsModalLoadingVisible(true);
+  }
+  const closeLoadingModal = () => {
+    setIsModalLoadingVisible(false);
+  };
+  const doNothing = () =>
+  {
+    console.log("Aguardando...");
+  }
 
 
   /*  Atualização de Perfil  */
   const handleSubmitUpdate = async (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
 
     event.preventDefault();
+
+    //Abre Modal Loading
+    setMsgTitle("Atualizado Perfil");
+    setMessage("Atualizando as suas informações. Por favor, aguarde...");
+    openLoadingModal();
 
     var changedUser: renderizador = {
       id: currentUser.id,
@@ -119,42 +136,49 @@ const Settings = () => {
     if (changedUser.capacidade == null || changedUser.capacidade == 0)
       changedUser.capacidade = currentUser.capacidade;
 
-    console.log("Atual: ", currentUser);
-    console.log("Atualizado: ", changedUser);
+    //console.log("Atual: ", currentUser);
+    //console.log("Atualizado: ", changedUser);
 
-    try {
+    setTimeout(async () => {
 
-      await renderService.updateRenderizador(changedUser).then((response) => {
+      try {
 
-        if (response.status == 200) {
-          
-          //console.log("User Atualizado");
-          localStorage.setItem("renderizador", JSON.stringify(changedUser));
+        await renderService.updateRenderizador(changedUser).then((response) => {
 
-          setMsgTitle("Perfil Atualizado!");
-          setMessage("Suas informações foram atualizadas com sucesso!");
-          setError(false);
-          handleOpenModal();
+          if (response.status == 200) {
 
-        }
-        else {
-          //console.log("Erro ao atualizar");
-          console.log(response);
-          setMsgTitle("Erro ao atualizar dados.");
-          setMessage("Favor entrar em contato com a equipe da Plataforma...");
-          setError(true);
-          handleOpenModal();
-        }
+            //console.log("User Atualizado");
+            localStorage.setItem("renderizador", JSON.stringify(changedUser));
 
-      });
+            setMsgTitle("Perfil Atualizado!");
+            setMessage("Suas informações foram atualizadas com sucesso!");
+            setError(false);
+            closeLoadingModal();
+            handleOpenModal();
 
-    } catch (error) {
-      console.log(error);
-      setMsgTitle("Erro ao atualizar dados.");
-      setMessage("Favor entrar em contato com a equipe da Plataforma...");
-      setError(true);
-      handleOpenModal();
-    }
+          }
+          else {
+            //console.log("Erro ao atualizar");
+            console.log(response);
+            setMsgTitle("Erro ao atualizar dados.");
+            setMessage("Favor entrar em contato com a equipe da Plataforma...");
+            setError(true);
+            closeLoadingModal();
+            handleOpenModal();
+          }
+
+        });
+
+      } catch (error) {
+        console.log(error);
+        setMsgTitle("Erro ao atualizar dados.");
+        setMessage("Favor entrar em contato com a equipe da Plataforma...");
+        setError(true);
+        closeLoadingModal();
+        handleOpenModal();
+      }
+
+    }, 2000);
   }
 
   useEffect(() => {
@@ -512,7 +536,8 @@ const Settings = () => {
         </div>
       }
 
-      {isModalVisible && <Mensagem onClose={handleCloseModal} onConfirm={handleCloseModal} title={msgTitle} isError={isError} message={message} /> }
+      {isModalVisible && <Mensagem onClose={handleCloseModal} onConfirm={handleCloseModal} title={msgTitle} isError={isError} message={message} />}
+      {isModalLoadingVisible && <Loading onClose={doNothing} onConfirm={doNothing} title={msgTitle} message={message} />}
 
     </DefaultLayout >
   );

@@ -17,59 +17,61 @@ const Profile = () => {
     setTimeout(() => setLoading(false), 2000);
 
   }, []);
-  
+
   return (
     <DefaultLayout>
 
       {loading ? <Loader /> :
 
-      <div className="mx-auto max-w-242.5">
+        <div className="mx-auto max-w-242.5">
 
-        <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-          <div className="relative z-20 h-35 md:h-65">
-            <Image
-              src={"/images/cover/cover-01.png"}
-              alt="profile cover"
-              className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center"
-              width={970}
-              height={260}
-              style={{
-                width: "auto",
-                height: "auto",
-              }}
-            />
-            
-            <div className="absolute bottom-1 right-1 z-10 xsm:bottom-4 xsm:right-4">
-              <label
-                htmlFor="cover"
-                className="flex cursor-pointer items-center justify-center gap-2 rounded bg-primary px-2 py-1 text-sm font-medium text-white hover:bg-opacity-80 xsm:px-4"
-              >
-                <Link                    
+          <div className="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+            <div className="relative z-20 h-35 md:h-65 h-max-60">
+              <Image
+                src={"/images/cover/2151263537.jpg"}
+                alt="profile cover"
+                className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center"
+                width={970}
+                height={260}
+                style={{
+                  display: "block",
+                  margin: "0 auto",
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                }}
+              />
+
+              <div className="absolute bottom-1 right-1 z-10 xsm:bottom-4 xsm:right-4">
+                <label
+                  htmlFor="cover"
+                  className="flex cursor-pointer items-center justify-center gap-2 rounded bg-primary px-2 py-1 text-sm font-medium text-white hover:bg-opacity-80 xsm:px-4"
+                >
+                  <Link
                     id="cover"
                     className="hover:text-opacity-80 justify-items-center justify-center hover:bg-opacity-80"
-                     href="/portaldorenderizador/perfil/editar" >
-                    
+                    href="/portaldorenderizador/perfil/editar" >
+
                     <span>Editar</span>
 
-                </Link>                
-              </label>
+                  </Link>
+                </label>
+              </div>
+
             </div>
-            
-          </div>
-          <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
-            <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
-              <div className="relative drop-shadow-2">
-                <Image
-                  src={"/images/user/user-06.png"}
-                  width={160}
-                  height={160}
-                  style={{
-                    width: "auto",
-                    height: "auto",
-                  }}
-                  alt="profile"
-                />
-                { /*
+            <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
+              <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
+                <div className="relative drop-shadow-2">
+                  <Image
+                    src={"/images/user/user-06.png"}
+                    width={160}
+                    height={160}
+                    style={{
+                      width: "auto",
+                      height: "auto",
+                    }}
+                    alt="profile"
+                  />
+                  { /*
                 <label
                   htmlFor="profile"
                   className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
@@ -103,15 +105,15 @@ const Profile = () => {
                   />
                 </label>
                 */ }
+                </div>
               </div>
-            </div>
-            <div className="mt-4">
-              <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
-                {currentUser.nome}
-              </h3>
-              <p className="font-medium">{currentUser.titulo}</p>
-              
-              { /*
+              <div className="mt-4">
+                <h3 className="mb-1.5 text-2xl font-semibold text-black dark:text-white">
+                  {currentUser.nome}
+                </h3>
+                <p className="font-medium">{currentUser.titulo}</p>
+
+                { /*
               <div className="mx-auto mb-5.5 mt-4.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
                 <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                   <span className="font-semibold text-black dark:text-white">
@@ -134,22 +136,22 @@ const Profile = () => {
               </div>
               */ }
 
-              <div className="mt-10 mx-auto max-w-180">
-                <h4 className="font-semibold text-black dark:text-white">
-                  Sobre mim
-                </h4>
-                <p className="mt-4.5">
-                  {currentUser.descricao}
-                </p>
-              </div>
+                <div className="mt-10 mx-auto max-w-180">
+                  <h4 className="font-semibold text-black dark:text-white">
+                    Sobre mim
+                  </h4>
+                  <p className="mt-4.5">
+                    {currentUser.descricao}
+                  </p>
+                </div>
 
-              <div className="mt-6.5">
-                <h4 className="mb-3.5 font-medium text-black dark:text-white">
-                  Para mais informações, acesse meu site:
-                </h4>
+                <div className="mt-6.5">
+                  <h4 className="mb-3.5 font-medium text-black dark:text-white">
+                    Para mais informações, acesse meu site:
+                  </h4>
 
-                <div className="flex items-center justify-center gap-2">
-                  { /*
+                  <div className="flex items-center justify-center gap-2">
+                    { /*
                   <Link
                     href="#"
                     className="hover:text-primary"
@@ -240,41 +242,41 @@ const Profile = () => {
                   </Link>
                   */ }
 
-                  <Link
-                    href={currentUser.site}
-                    className="hover:text-primary justify-items-center justify-center"
-                    aria-label="social-icon"
-                  >
-                    <svg
-                      className="fill-current"
-                      width="22"
-                      height="22"
-                      viewBox="0 0 22 22"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <Link
+                      href={currentUser.site}
+                      className="hover:text-primary justify-items-center justify-center"
+                      aria-label="social-icon"
                     >
-                      <g clipPath="url(#clip0_30_978)">
-                        <path
-                          d="M18.3233 10.6077C18.2481 9.1648 17.7463 7.77668 16.8814 6.61929C16.6178 6.90312 16.3361 7.16951 16.038 7.41679C15.1222 8.17748 14.0988 8.79838 13.0011 9.25929C13.1542 9.58013 13.2945 9.89088 13.4182 10.1842V10.187C13.4531 10.2689 13.4867 10.3514 13.519 10.4345C14.9069 10.2786 16.3699 10.3355 17.788 10.527C17.9768 10.5527 18.1546 10.5802 18.3233 10.6077ZM9.72038 3.77854C10.6137 5.03728 11.4375 6.34396 12.188 7.69271C13.3091 7.25088 14.2359 6.69354 14.982 6.07296C15.2411 5.8595 15.4849 5.62824 15.7117 5.38088C14.3926 4.27145 12.7237 3.66426 11 3.66671C10.5711 3.66641 10.1429 3.70353 9.72038 3.77762V3.77854ZM3.89862 9.16396C4.52308 9.1482 5.1468 9.11059 5.76863 9.05121C7.27163 8.91677 8.7618 8.66484 10.2255 8.29771C9.46051 6.96874 8.63463 5.67578 7.75046 4.42296C6.80603 4.89082 5.97328 5.55633 5.30868 6.37435C4.64409 7.19236 4.16319 8.14374 3.89862 9.16396ZM5.30113 15.6155C5.65679 15.0957 6.12429 14.5109 6.74488 13.8747C8.07771 12.5089 9.65071 11.4455 11.4712 10.8589L11.528 10.8424C11.3768 10.5087 11.2347 10.2108 11.0917 9.93029C9.40871 10.4207 7.63588 10.7269 5.86946 10.8855C5.00779 10.9634 4.23504 10.9973 3.66671 11.0028C3.66509 12.6827 4.24264 14.3117 5.30204 15.6155H5.30113ZM13.7546 17.7971C13.4011 16.0144 12.9008 14.2641 12.2586 12.5639C10.4235 13.2303 8.96138 14.2047 7.83113 15.367C7.375 15.8276 6.97021 16.3362 6.62388 16.8841C7.88778 17.8272 9.42308 18.3356 11 18.3334C11.9441 18.3347 12.8795 18.1533 13.7546 17.799V17.7971ZM15.4715 16.8117C16.9027 15.7115 17.8777 14.1219 18.2096 12.3475C17.898 12.2696 17.5029 12.1917 17.0684 12.1312C16.1023 11.9921 15.1221 11.9819 14.1534 12.101C14.6988 13.6399 15.1392 15.2141 15.4715 16.8126V16.8117ZM11 20.1667C5.93729 20.1667 1.83337 16.0628 1.83337 11C1.83337 5.93729 5.93729 1.83337 11 1.83337C16.0628 1.83337 20.1667 5.93729 20.1667 11C20.1667 16.0628 16.0628 20.1667 11 20.1667Z"
-                          fill=""
-                        />
-                      </g>
+                      <svg
+                        className="fill-current"
+                        width="22"
+                        height="22"
+                        viewBox="0 0 22 22"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g clipPath="url(#clip0_30_978)">
+                          <path
+                            d="M18.3233 10.6077C18.2481 9.1648 17.7463 7.77668 16.8814 6.61929C16.6178 6.90312 16.3361 7.16951 16.038 7.41679C15.1222 8.17748 14.0988 8.79838 13.0011 9.25929C13.1542 9.58013 13.2945 9.89088 13.4182 10.1842V10.187C13.4531 10.2689 13.4867 10.3514 13.519 10.4345C14.9069 10.2786 16.3699 10.3355 17.788 10.527C17.9768 10.5527 18.1546 10.5802 18.3233 10.6077ZM9.72038 3.77854C10.6137 5.03728 11.4375 6.34396 12.188 7.69271C13.3091 7.25088 14.2359 6.69354 14.982 6.07296C15.2411 5.8595 15.4849 5.62824 15.7117 5.38088C14.3926 4.27145 12.7237 3.66426 11 3.66671C10.5711 3.66641 10.1429 3.70353 9.72038 3.77762V3.77854ZM3.89862 9.16396C4.52308 9.1482 5.1468 9.11059 5.76863 9.05121C7.27163 8.91677 8.7618 8.66484 10.2255 8.29771C9.46051 6.96874 8.63463 5.67578 7.75046 4.42296C6.80603 4.89082 5.97328 5.55633 5.30868 6.37435C4.64409 7.19236 4.16319 8.14374 3.89862 9.16396ZM5.30113 15.6155C5.65679 15.0957 6.12429 14.5109 6.74488 13.8747C8.07771 12.5089 9.65071 11.4455 11.4712 10.8589L11.528 10.8424C11.3768 10.5087 11.2347 10.2108 11.0917 9.93029C9.40871 10.4207 7.63588 10.7269 5.86946 10.8855C5.00779 10.9634 4.23504 10.9973 3.66671 11.0028C3.66509 12.6827 4.24264 14.3117 5.30204 15.6155H5.30113ZM13.7546 17.7971C13.4011 16.0144 12.9008 14.2641 12.2586 12.5639C10.4235 13.2303 8.96138 14.2047 7.83113 15.367C7.375 15.8276 6.97021 16.3362 6.62388 16.8841C7.88778 17.8272 9.42308 18.3356 11 18.3334C11.9441 18.3347 12.8795 18.1533 13.7546 17.799V17.7971ZM15.4715 16.8117C16.9027 15.7115 17.8777 14.1219 18.2096 12.3475C17.898 12.2696 17.5029 12.1917 17.0684 12.1312C16.1023 11.9921 15.1221 11.9819 14.1534 12.101C14.6988 13.6399 15.1392 15.2141 15.4715 16.8126V16.8117ZM11 20.1667C5.93729 20.1667 1.83337 16.0628 1.83337 11C1.83337 5.93729 5.93729 1.83337 11 1.83337C16.0628 1.83337 20.1667 5.93729 20.1667 11C20.1667 16.0628 16.0628 20.1667 11 20.1667Z"
+                            fill=""
+                          />
+                        </g>
 
-                      <defs>
-                        <clipPath id="clip0_30_978">
-                          <rect width="22" height="22" fill="white" />
-                        </clipPath>
-                      </defs>
-                      
-                    </svg>
+                        <defs>
+                          <clipPath id="clip0_30_978">
+                            <rect width="22" height="22" fill="white" />
+                          </clipPath>
+                        </defs>
 
-                    {currentUser.site}
+                      </svg>
 
-                  </Link>
+                      {currentUser.site}
 
-                    
+                    </Link>
 
-                  { /*
+
+
+                    { /*
                   <Link
                     href="#"
                     className="hover:text-primary"
@@ -307,12 +309,12 @@ const Profile = () => {
                     </svg>
                   </Link>
                   */ }
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
       }
 

@@ -11,14 +11,14 @@ const DropdownUser = () => {
 
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  
 
   const currentUser: renderizador = JSON.parse(localStorage.getItem("renderizador") || ""); 
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const handleOpenModal = async () => {
     setIsModalVisible(true);
   }
-
   const handleCloseModal = () => {
     setIsModalVisible(false);
   };
