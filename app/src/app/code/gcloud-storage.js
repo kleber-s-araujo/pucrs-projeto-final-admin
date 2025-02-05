@@ -42,3 +42,13 @@ const UploadFileComponent: React.FC = () => {
 };
 
 export default UploadFileComponent;
+
+
+
+
+
+
+
+
+
+

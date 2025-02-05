@@ -1,87 +1,105 @@
 "use client"
-import Image from "next/image";
-import { Product } from "@/types/product";
 import { useState } from "react";
+import { requisicao } from "@/types/requisicao";
 
-const productData: Product[] = [
+const requisicaoList: requisicao[] = [
   {
-    image: "/images/product/product-01.png",
-    name: "Apple Watch Series 7",
-    category: "Electronics",
-    price: 296,
-    sold: 22,
-    profit: 45,
+    id: 1,
+    titulo: "Projeto 1",
+    dataRegistro:  new Date(),
+    status: 1,
+    nome: "Cliente 1",
+    statusDesc: "Solicitada",
+    descricaoPrioridade: "Alta",
+    valor: 10.50
   },
   {
-    image: "/images/product/product-02.png",
-    name: "Macbook Pro M1",
-    category: "Electronics",
-    price: 546,
-    sold: 12,
-    profit: 125,
+    id: 2,
+    titulo: "Projeto 2",
+    dataRegistro:  new Date(),
+    status: 2,
+    nome: "Cliente 1",
+    statusDesc: "Em Análise",
+    descricaoPrioridade: "Alta",
+    valor: 350.50
   },
   {
-    image: "/images/product/product-03.png",
-    name: "Dell Inspiron 15",
-    category: "Electronics",
-    price: 443,
-    sold: 64,
-    profit: 247,
+    id: 3,
+    titulo: "Projeto 3",
+    dataRegistro: new Date(),
+    status: 3,
+    nome: "Cliente 2",
+    statusDesc: "Aguardando Informação Adicional",
+    descricaoPrioridade: "Alta",
+    valor: 1005.50
   },
   {
-    image: "/images/product/product-04.png",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
+    id: 4,
+    titulo: "Projeto 3",
+    dataRegistro: new Date(),
+    status: 4,
+    nome: "Cliente 2",
+    statusDesc: "Em Andamento",
+    descricaoPrioridade: "Alta",
+    valor: 1005.50
   },
   {
-    image: "/images/product/product-04.png",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
+    id: 5,
+    titulo: "Projeto 3",
+    dataRegistro: new Date(),
+    status: 5,
+    nome: "Cliente 2",
+    statusDesc: "Aprovação Solicitada",
+    descricaoPrioridade: "Alta",
+    valor: 1005.50
   },
   {
-    image: "/images/product/product-04.png",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
+    id: 6,
+    titulo: "Projeto 3",
+    dataRegistro: new Date(),
+    status: 6,
+    nome: "Cliente 2",
+    statusDesc: "Revisão Solicitada",
+    descricaoPrioridade: "Alta",
+    valor: 1005.50
   },
   {
-    image: "/images/product/product-04.png",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
-  },
+    id: 7,
+    titulo: "Projeto 3",
+    dataRegistro: new Date(),
+    status: 8,
+    nome: "Cliente 2",
+    statusDesc: "Aguardando Pagamento",
+    descricaoPrioridade: "Alta",
+    valor: 1005.50
+  }
 ];
+
+const formatDateBR = (date) => {
+  return new Intl.DateTimeFormat('pt-BR').format(date);
+};
 
 const MinhasAtividadesFull = () => {
 
-  const [nameFilter, setNameFilter] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('');
+  const [idFilter, setIdFilter] = useState('');
+  const [tituloFilter, setTituloFilter] = useState('');
+  const [clienteFilter, setClienteFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [dataFilter, setDataFilter] = useState('');
 
-  const filteredData = productData
-    .filter(product => product.name.toLowerCase().includes(nameFilter.toLowerCase()))
-    .filter(product => product.category.toLowerCase().includes(categoryFilter.toLowerCase()));
+  const filteredData = requisicaoList
+    .filter(requisicao => requisicao.id.toString().includes(idFilter))
+    .filter(requisicao => requisicao.titulo.toLowerCase().includes(tituloFilter.toLowerCase()))
+    .filter(requisicao => requisicao.nome.toLowerCase().includes(clienteFilter.toLowerCase()))
+    .filter(requisicao => requisicao.statusDesc.toLowerCase().includes(statusFilter.toLowerCase()))
+    .filter(requisicao => requisicao.dataRegistro.toString().toLowerCase().includes(dataFilter.toLowerCase()));
 
   return (
 
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
 
-      <div className="px-4 py-3 md:px-6 xl:px-7.5">
-        <h4 className="text-xl font-semibold text-black dark:text-white">
-          Todas Atividades
-        </h4>
-      </div>
-
       <div className="px-4 py-4 md:px-6 xl:px-7.5 justify-item-center bg-gray-20" >
+
         <h6> Filtros: </h6>
 
         <input
@@ -89,8 +107,8 @@ const MinhasAtividadesFull = () => {
           id="id"
           name="id"
           placeholder="Id"
-          value={nameFilter}
-          onChange={(e) => setNameFilter(e.target.value)}
+          value={idFilter}
+          onChange={(e) => setIdFilter(e.target.value)}
           className="mr-6 rounded border px-2 py-1 w-20"
         />
 
@@ -99,42 +117,44 @@ const MinhasAtividadesFull = () => {
           id="projeto"
           name="projeto"
           placeholder="Nome do Projeto"
-          value={nameFilter}
-          onChange={(e) => setNameFilter(e.target.value)}
+          value={tituloFilter}
+          onChange={(e) => setTituloFilter(e.target.value)}
           className="mr-6 rounded border px-2 py-1"
         />
 
         <input
           type="text"
           placeholder="Cliente"
-          value={categoryFilter}
-          onChange={(e) => setCategoryFilter(e.target.value)}
+          value={clienteFilter}
+          onChange={(e) => setClienteFilter(e.target.value)}
           className="mr-6 rounded border px-2 py-1"
         />
 
         <input
           type="text"
           placeholder="Status"
-          value={categoryFilter}
-          onChange={(e) => setCategoryFilter(e.target.value)}
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
           className="mr-6 rounded border px-2 py-1"
         />
 
+        { /*
         <input
           type="date"
           placeholder="Data de Solicitação"
-          value={categoryFilter}
-          onChange={(e) => setCategoryFilter(e.target.value)}
+          value={dataFilter}
+          onChange={(e) => setDataFilter(e.target.value)}
           className="mr-6 rounded border px-2 py-1"
         />
-
+        */ }
+        
       </div>
 
-      <div className="grid grid-cols-8 bg-gray-100 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">       
+      <div className="grid grid-cols-8 bg-gray-100 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-9 md:px-6 2xl:px-7.5">       
         <div className="col-span-2 flex items-left">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-left">
             <p className="font-medium">
-              Título do Projeto
+              Projeto
             </p>
           </div>
         </div>
@@ -144,15 +164,14 @@ const MinhasAtividadesFull = () => {
         <div className="col-span-1 hidden items-center sm:flex">
           <p className="font-medium">Criado em:</p>
         </div>
-        <div className="col-span-1 flex items-center">
+        <div className="col-span-2 flex items-center">
           <p className="font-medium">Status</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Valor</p>
+          <p className="font-medium">Prioridade</p>
         </div>
         <div className="col-span-1 flex items-center">
-          <p className="font-medium">Prioridade</p>
-
+          <p className="font-medium">Valor</p>
         </div>
         <div className="col-span-1 justify-end sm:items-right items-right">
           <p className="font-medium">Ação</p>
@@ -160,25 +179,25 @@ const MinhasAtividadesFull = () => {
       </div>
 
       <div className="max-h-[460px] overflow-y-auto">
-        {filteredData.map((product, key) => (
+        {filteredData.map((requisicao, key) => (
           <div
-            className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
+            className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-9 md:px-6 2xl:px-7.5"
             key={key}
           >
             <div className="col-span-2 flex items-left">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-left">
                 <p className="text-sm text-black dark:text-white">
-                  (ID)
-                  {product.name}
+                  {requisicao.id } 
+                  {` - ` + requisicao.titulo}
                 </p>
               </div>
             </div>
 
 
-            <div className="col-span-1.5 flex items-center">
+            <div className="col-span-1 flex items-center">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <p className="text-sm text-black dark:text-white">
-                  Cliente
+                  {requisicao.nome}
                 </p>
               </div>
             </div>
@@ -186,25 +205,32 @@ const MinhasAtividadesFull = () => {
             <div className="col-span-1 flex items-center">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <p className="text-sm text-black dark:text-white">
-                  01/01/2025
+                  {formatDateBR(requisicao.dataRegistro)}
                 </p>
               </div>
             </div>
 
+            <div className="col-span-2 hidden items-center sm:flex">
+              <p
+                className={`inline-flex rounded-full bg-opacity-10 px-3 py-1 text-sm font-medium 
+                  ${ requisicao.status === 7 || requisicao.status === 8 ? "bg-success text-success"
+                    : requisicao.status === 1 || requisicao.status === 3 ? "bg-secondary text-secondary"
+                    : requisicao.status === 2 || requisicao.status === 4 ? "bg-primary text-primary"
+                    : "bg-warning text-warning"
+                  }`}
+              >
+                {requisicao.statusDesc}
+              </p>
+            </div>
+
             <div className="col-span-1 hidden items-center sm:flex">
               <p className="text-sm text-black dark:text-white">
-                Status...
+                {requisicao.descricaoPrioridade}
               </p>
             </div>
 
             <div className="col-span-1 flex items-center">
-              <p className="text-sm text-meta-3">${product.profit}</p>
-            </div>
-
-            <div className="col-span-1 hidden items-center sm:flex">
-              <p className="text-sm text-black dark:text-white">
-                {product.category}
-              </p>
+              <p className="text-sm text-meta-3">R$ {requisicao.valor.toString()}</p>
             </div>
 
             <div className="flex items-center space-x-3.5">
