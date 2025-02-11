@@ -40,3 +40,5 @@ yarn.lock
 
 # Acc Keys
 *vertical*.json
+.env
+*.env

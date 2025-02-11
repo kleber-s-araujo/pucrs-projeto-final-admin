@@ -1,5 +1,5 @@
 import http from "../http-common";
-
+    
 const getTotalizadores = (id: Number) => {
     return http.get<any>(`/dashboard/renderizador/tot/${id}`);
 };
