@@ -4,6 +4,7 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import React, { useEffect, useState } from "react";
 import GalleryItem from "./GalleryItem";
 import ImageUpload from "./add/page";
+import ImagemData from "./ImagemData";
 
 const PortifolioList: React.FC = () => {
 
@@ -24,7 +25,11 @@ const PortifolioList: React.FC = () => {
             <DefaultLayout>
                 {loading ? <Loader /> :
                     <div>
-                        <GalleryItem key={1} />
+                        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 text-white">
+                            { ImagemData.map((Imagem, key) => (
+                                <GalleryItem key={key} Imagem={Imagem}  /> 
+                            ))}                            
+                        </div>                        
                          <button onClick={(e) => { setOpenModal(true)}}>
                             <div className="fixed bottom-8 right-8 z-[99] rounded-full">
                                 <div
@@ -38,9 +43,7 @@ const PortifolioList: React.FC = () => {
                         
                         { /* Modal */ }
                         { openModal !== false && ( <div className="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center z-[99999]">
-
                             <ImageUpload onSubmit={onsubmit} onCancel={closeModal} />
-
                         </div> ) }
                         { /* Fim Modal */ }
                     </div>                    
