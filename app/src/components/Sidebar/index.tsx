@@ -86,6 +86,7 @@ const menuGroups = [
         ],
       },
 
+      /*
       {
         icon: (
           <svg
@@ -105,7 +106,7 @@ const menuGroups = [
         label: "Calendário de Atividades",
         route: "/portaldorenderizador/calendario-atividades",
       },
-      /*
+      
       {
         icon: (
           <svg
