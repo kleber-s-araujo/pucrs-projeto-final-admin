@@ -7,6 +7,7 @@ import ImageUpload from "./add/page";
 import ImagemData from "./ImagemData";
 import { Imagem } from "@/types/image";
 import imageService from "@/services/images";
+import { renderizador } from "@/types/renderizador";
 
 const PortifolioList: React.FC = () => {
 
@@ -14,6 +15,7 @@ const PortifolioList: React.FC = () => {
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [images, setImages] = useState<Imagem[]>(ImagemData);
     const closeModal = () => setOpenModal(false);
+    const currentUser: renderizador = JSON.parse(localStorage.getItem("renderizador") || "");
 
     const onsubmit = async (title: string, image: File): Promise<void> => {
         
@@ -27,7 +29,7 @@ const PortifolioList: React.FC = () => {
         }
         //console.log(newImage);
 
-        const ret = await imageService.postNewImage(image, title);
+        const ret = await imageService.postNewImage(image, title, currentUser);
         console.log(ret);
 
         /* Send to Server and Upload the new Image to GCloud Storage */

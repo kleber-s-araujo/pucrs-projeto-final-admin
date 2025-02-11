@@ -1,11 +1,13 @@
+import { renderizador } from "@/types/renderizador";
 import http from "../http-common";
 import axios from 'axios';
 
-const postNewImage = async (file: File, title: string): Promise<void> => {
+const postNewImage = async (file: File, title: string, user: renderizador): Promise<void> => {
     
     const formData = new FormData();
     formData.append('image', file);
     formData.append('title', title);
+    formData.append('sender', user.id.toString());
 
     try {
 
