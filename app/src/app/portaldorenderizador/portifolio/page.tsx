@@ -15,7 +15,17 @@ const PortifolioList: React.FC = () => {
     const closeModal = () => setOpenModal(false);
 
     const onsubmit = async (title: string, image: File): Promise<void> => {
-        alert(title);
+        
+        const newFile = URL.createObjectURL(image);
+        const newImage: Imagem = {
+            _id: 99,
+            titulo: title,
+            nome: image.name,
+            data: image,
+            url: newFile
+        }
+        console.log(newImage);
+        setImages([...images, newImage]);
     };
 
     const onDelete = (key: Number): void => {
