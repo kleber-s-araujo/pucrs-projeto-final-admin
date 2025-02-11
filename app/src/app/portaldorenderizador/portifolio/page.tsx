@@ -6,6 +6,7 @@ import GalleryItem from "./GalleryItem";
 import ImageUpload from "./add/page";
 import ImagemData from "./ImagemData";
 import { Imagem } from "@/types/image";
+import imageService from "@/services/images";
 
 const PortifolioList: React.FC = () => {
 
@@ -24,7 +25,12 @@ const PortifolioList: React.FC = () => {
             data: image,
             url: newFile
         }
-        console.log(newImage);
+        //console.log(newImage);
+
+        const ret = await imageService.postNewImage(image, title);
+        console.log(ret);
+
+        /* Send to Server and Upload the new Image to GCloud Storage */
         setImages([...images, newImage]);
     };
 
