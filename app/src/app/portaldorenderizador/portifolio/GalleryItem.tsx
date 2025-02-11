@@ -2,7 +2,17 @@
 import { Imagem } from "@/types/image";
 import { useState } from "react";
 
-const GalleryItem = ({ Imagem }: { Imagem: Imagem }) => {
+interface GalleryItemProps {
+  itemkey: Number,
+  Imagem: Imagem;
+  onDelete?: (key: Number) => void;
+}
+
+const GalleryItem: React.FC<GalleryItemProps> = ({
+  itemkey,
+  Imagem,
+  onDelete
+}) => {
 
   //const { mainImage, title, metadata } = "";
   //
@@ -20,11 +30,15 @@ const GalleryItem = ({ Imagem }: { Imagem: Imagem }) => {
     //setSelectedImage(newIndex);
   };
 
+  const delImage = () => {
+    if (onDelete)
+      onDelete(itemkey); 
+  };
 
   return (   
-    <div key={Imagem._id} className="relative group mb-4">
+    <div className="relative group mb-4">
       <img className="rounded-lg" src={Imagem.url} />
-      <button className="absolute p-2 top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+      <button onClick={delImage} className="absolute p-2 top-2 right-2 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
         <svg
           className=""
           width="20"

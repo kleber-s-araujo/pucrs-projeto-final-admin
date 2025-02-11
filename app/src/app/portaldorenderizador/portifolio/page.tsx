@@ -5,16 +5,23 @@ import React, { useEffect, useState } from "react";
 import GalleryItem from "./GalleryItem";
 import ImageUpload from "./add/page";
 import ImagemData from "./ImagemData";
+import { Imagem } from "@/types/image";
 
 const PortifolioList: React.FC = () => {
 
     const [loading, setLoading] = useState<boolean>(true);
     const [openModal, setOpenModal] = useState<boolean>(false);
+    const [images, setImages] = useState<Imagem[]>(ImagemData);
     const closeModal = () => setOpenModal(false);
 
     const onsubmit = async (title: string, image: File): Promise<void> => {
         alert(title);
     };
+
+    const onDelete = (key: Number): void => {
+        const newImages = images.filter((_, i) => i !== key);
+        setImages(newImages);
+    }
 
     useEffect(() => {
         setTimeout(() => setLoading(false), 1000);
@@ -26,8 +33,8 @@ const PortifolioList: React.FC = () => {
                 {loading ? <Loader /> :
                     <div>
                         <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 text-white">
-                            { ImagemData.map((Imagem, key) => (
-                                <GalleryItem key={key} Imagem={Imagem}  /> 
+                            { images.map((Imagem, index) => (
+                                <GalleryItem itemkey={index} Imagem={Imagem} onDelete={onDelete} /> 
                             ))}                            
                         </div>                        
                          <button onClick={(e) => { setOpenModal(true)}}>
