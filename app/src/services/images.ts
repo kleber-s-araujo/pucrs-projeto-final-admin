@@ -2,7 +2,7 @@ import { renderizador } from "@/types/renderizador";
 import http from "../http-common";
 import axios from 'axios';
 
-const postNewImage = async (file: File, title: string, user: renderizador): Promise<void> => {
+const postNewImage = async (file: File, title: string, user: renderizador) => {
     
     const formData = new FormData();
     formData.append('image', file);
@@ -17,7 +17,7 @@ const postNewImage = async (file: File, title: string, user: renderizador): Prom
                 'Content-Type': 'multipart/form-data',
             },
         });
-        console.log(response);
+        return response;
 
     }
     catch (error) {

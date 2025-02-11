@@ -30,6 +30,7 @@ const PortifolioList: React.FC = () => {
         //console.log(newImage);
 
         const ret = await imageService.postNewImage(image, title, currentUser);
+        
         console.log(ret);
 
         /* Send to Server and Upload the new Image to GCloud Storage */
