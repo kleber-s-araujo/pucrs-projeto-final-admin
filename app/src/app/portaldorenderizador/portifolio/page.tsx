@@ -19,19 +19,17 @@ const PortifolioList: React.FC = () => {
 
     const onsubmit = async (title: string, image: File): Promise<void> => {
         
-        const newFile = URL.createObjectURL(image);
+        //const newFile = URL.createObjectURL(image);
+        const ret = await imageService.postNewImage(image, title, currentUser);
         const newImage: Imagem = {
             _id: 99,
             titulo: title,
             nome: image.name,
             data: image,
-            url: newFile
+            url: ret?.data.imageUrl
         }
-        //console.log(newImage);
-
-        const ret = await imageService.postNewImage(image, title, currentUser);
-        
-        console.log(ret);
+        //console.log(newImage);              
+        //console.log(ret);
 
         /* Send to Server and Upload the new Image to GCloud Storage */
         setImages([...images, newImage]);
