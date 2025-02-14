@@ -24,6 +24,7 @@ const config: Config = {
         current: "currentColor",
         transparent: "transparent",
         white: "#FFFFFF",
+        blk: "#1C1C1C",
         black: {
           // ...colors.black,
           DEFAULT: "#1C2434",

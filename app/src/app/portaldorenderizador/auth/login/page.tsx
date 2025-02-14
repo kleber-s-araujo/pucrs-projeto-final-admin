@@ -19,6 +19,7 @@ const SignIn: React.FC = () => {
 
         let email = event.target.email.value;
         let senha = event.target.senha.value;
+
         loginService.doLoginRenderizador(email, senha).then((response) => {
 
           if (response.status === 200) {
@@ -33,24 +34,10 @@ const SignIn: React.FC = () => {
 
         });
 
-        /*
-        const response = await fetch('http://localhost:3030/api/renderizador/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include', // Important for cookies/sessions
-          body: JSON.stringify({ email, senha }),
-        });
-
-        console.log(response);
-        */
       }
       else if (event.nativeEvent.submitter?.id === "btnGoogle") {
         alert("Login com Google");
       }
-
-      //loginService.getTest().then((response: any) => {  })
 
     } catch (error) {
       console.error('Erro ao Efetuar Login', error);
