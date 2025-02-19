@@ -23,7 +23,6 @@ const SignIn: React.FC = () => {
         loginService.doLoginRenderizador(email, senha).then((response) => {
 
           if (response.status === 200) {
-            console.log(response.data);
 
             localStorage.setItem("auth-token", response.data.session);
             localStorage.setItem("renderizador", JSON.stringify(response.data.renderizador));
