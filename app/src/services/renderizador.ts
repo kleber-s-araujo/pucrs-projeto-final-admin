@@ -1,5 +1,5 @@
 import { renderizador } from "@/types/renderizador";
-import http from "../http-common";0
+import http from "../http-common";
 
 const updateRenderizador = (renderizador: renderizador) => {
     const body = { 
